@@ -1,0 +1,4 @@
+# Codex CLI local overrides (ignored by Git, picked up by Codex agent)
+parallel_tasks: 3       # AA kit builds fastest with 3 sandboxes
+default_target: ci      # run `make ci` unless told otherwise
+editor: nvim            # force unified diff style in PR comments
