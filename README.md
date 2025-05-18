@@ -24,3 +24,6 @@ of dApps and may fund the paymaster using `depositToEntryPoint`. The paymaster
 sponsors operations only when the calling dApp (`tx.origin`) is approved. After
 `postOp`, any ETH returned by the EntryPoint is re-deposited up to `maxRefundWei`
 and a `GasSponsored` event logs the user and actual gas cost.
+
+## Bundler architecture
+The Bundler service exposes minimal ERC-4337 RPC endpoints through Fastify. Each incoming User Operation is simulated against the on-chain EntryPoint using viem and accepted only when `validationData` is zero. Accepted operations are queued and forwarded to `handleOps` once five are gathered or two seconds pass. A built‑in paymaster route signs `paymasterAndData` for whitelisted dApps and tracks the amount of gas sponsored per user in a SQLite database via Drizzle. Daily budgets limit sponsorship and any overflow results in a 403 response. The service logs "Bundler ready" on start and can be run locally with `pnpm --filter services/bundler dev`.
