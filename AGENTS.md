@@ -20,10 +20,22 @@ Run *all* of the above before committing a patch or opening a PR.
 - Keep Solidity at `pragma ^0.8.24;`.
 - Front-end must pass **ESLint + Prettier** with the repo config.
 
-## ✅ PR checklist
-1. All tests pass locally.
-2. `pnpm lint` shows no errors.
-3. Describe *why* a change is needed in the PR body.
+- 
+## 🔒 Coding rules
+1. Use `pragma ^0.8.24;` in all Solidity files.  
+2. Do **not** commit new lockfiles (`package-lock.json`, `yarn.lock`).  
+3. Keep pull-request bodies under 1 500 chars; include *why*, not just *what*.  
+
+<!-- scope: repository -->
+
+## ☑️ PR check-list (enforced by CI)
+* `make ci` passes.  
+* No TODO or FIXME comments are added without a tracking issue.  
+* All exports in `/types/` have matching tests.  
+
+## 🚨 Failure policy
+If any command above fails, abort the task and push no code.  
+Use *Annotated Diffs* (Codex CLI flag `--annotate`) to explain fixes when iterating.
 
 ## 🧪 Programmatic checks
 A pre-commit hook enforces lint + test.  If it fails, fix and recommit.
