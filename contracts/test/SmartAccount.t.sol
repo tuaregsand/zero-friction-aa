@@ -14,7 +14,10 @@ contract EntryPointMock is IEntryPoint {
 
 contract Counter {
     uint256 public number;
-    function setNumber(uint256 n) external { number = n; }
+
+    function setNumber(uint256 n) external {
+        number = n;
+    }
 }
 
 contract SmartAccountTest is Test {
@@ -70,8 +73,8 @@ contract SmartAccountTest is Test {
         (UserOperation memory op, bytes32 hash) = _buildOp(data);
         op.signature = _sign(hash, ownerKey + 1);
         vm.prank(address(ep));
-        vm.expectRevert();
-        account.validateUserOp(op, hash, 0);
+        uint256 validation = account.validateUserOp(op, hash, 0);
+        assertEq(validation, 1);
     }
 
     function testRecoveryChangeOwner() public {
