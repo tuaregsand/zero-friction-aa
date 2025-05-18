@@ -1,0 +1,10 @@
+{
+  "name": "zero-friction-aa",
+  "private": true,
+  "scripts": {
+    "test": "echo 'test: no-op'",
+    "typecheck": "echo 'typecheck: no-op'",
+    "lint": "echo 'lint: no-op'",
+    "hardhat": "echo 'hardhat: no-op'"
+  }
+}
