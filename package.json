@@ -1,7 +1,7 @@
 {
   "name": "zero-friction-aa",
   "private": true,
-  "packageManager": "pnpm@10",
+  "packageManager": "pnpm@10.11.0",
   "scripts": {
     "dev": "pnpm --filter services/bundler dev",
     "build": "pnpm --filter services/bundler build",
