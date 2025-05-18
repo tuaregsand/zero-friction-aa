@@ -1,0 +1,11 @@
+[profile.default]
+src = "./"
+test = "./test"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.24"
+solc = "/root/.svm/solc/v0.8.24+commit.e11b9ed9/solc"
+
+
+offline = true
+auto_detect_solc = false
