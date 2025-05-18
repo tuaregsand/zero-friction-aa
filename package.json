@@ -1,10 +1,17 @@
 {
   "name": "zero-friction-aa",
   "private": true,
+  "packageManager": "pnpm@10",
   "scripts": {
-    "test": "echo 'test: no-op'",
-    "typecheck": "echo 'typecheck: no-op'",
-    "lint": "echo 'lint: no-op'",
-    "hardhat": "echo 'hardhat: no-op'"
+    "dev": "pnpm --filter services/bundler dev",
+    "build": "pnpm --filter services/bundler build",
+    "test": "pnpm --filter services/bundler test && forge test",
+    "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
+    "ci": "make ci"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9",
+    "typescript": "^5.5.0"
   }
 }

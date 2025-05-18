@@ -1,0 +1,32 @@
+{
+    "name": "bundler-service",
+    "version": "0.1.0",
+    "type": "module",
+    "main": "dist/index.js",
+    "scripts": {
+      "dev": "tsx watch src/index.ts",
+      "build": "tsc -p tsconfig.json",
+      "test": "vitest run",
+      "lint": "eslint src --ext .ts"
+    },
+    "dependencies": {
+      "@viem/chains": "^1.17.0",
+      "viem": "^1.17.0",
+      "fastify": "^4.26.1",
+      "fastify-plugin": "^4",
+      "fastify-sensible": "^5",
+      "zod": "^3.23.8",
+      "better-sqlite3": "^9.4.2",
+      "drizzle-orm": "^0.29.4"
+    },
+    "devDependencies": {
+      "tsx": "^4.7.0",
+      "types-better-sqlite3": "^7.6.7",
+      "vitest": "^1.5.2",
+      "@types/node": "^20.11.6",
+      "@types/fastify": "^4.15.0",
+      "eslint": "^8.57.0",
+      "eslint-config-prettier": "^9"
+    }
+  }
+  
