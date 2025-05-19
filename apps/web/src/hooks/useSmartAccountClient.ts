@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { startAuthentication, startRegistration } from '@simplewebauthn/browser';
 import { useCallback, useState } from 'react';
+import { toast } from '../toast.js';
 import { usePublicClient, useWalletClient } from 'wagmi';
 
 export function useSmartAccountClient() {
@@ -19,6 +20,8 @@ export function useSmartAccountClient() {
           user: { id: new Uint8Array([0]), name: username, displayName: username },
         },
       });
+    } catch (e: any) {
+      toast.error(e.message || 'registration failed');
     } finally {
       setLoading(false);
     }
@@ -34,6 +37,8 @@ export function useSmartAccountClient() {
         },
       });
       setAddress((`0x${res.id}` as `0x${string}`));
+    } catch (e: any) {
+      toast.error(e.message || 'connection failed');
     } finally {
       setLoading(false);
     }
@@ -44,6 +49,8 @@ export function useSmartAccountClient() {
       setLoading(true);
       try {
         await publicClient?.call({ to, value, data, account: wallet.data?.account });
+      } catch (e: any) {
+        toast.error(e.message || 'execution failed');
       } finally {
         setLoading(false);
       }

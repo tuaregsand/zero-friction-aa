@@ -17,6 +17,13 @@ Zero-Friction AA Kit delivers an ERC-4337 Smart Account, a whitelist Paymaster, 
 | `services/bundler/` | Fastify v5 Bundler + Paymaster API (Drizzle + SQLite) |
 | `apps/web/`         | Next 14 UI, Wagmi v2 hooks, Passkey onboarding        |
 
+## 🚀 Quick start
+
+```bash
+docker compose up -d
+open http://localhost:4000/onboard
+```
+
 ## Installation & Dev Loop
 
 ```bash

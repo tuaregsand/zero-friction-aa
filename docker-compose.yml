@@ -7,13 +7,18 @@ services:
       - "8545:8545"
   bundler:
     build: ./services/bundler
+    environment:
+      - PORT=3000
     ports:
-      - "3001:3001"
+      - "127.0.0.1:3000:3000"
     depends_on:
       - anvil
   web:
     build: ./apps/web
+    environment:
+      - PORT=4000
+      - NEXT_PUBLIC_BUNDLER_URL=http://localhost:3000
     ports:
-      - "3000:3000"
+      - "4000:4000"
     depends_on:
       - bundler

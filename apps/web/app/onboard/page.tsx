@@ -1,34 +1,32 @@
 // @ts-nocheck
 "use client";
-import { useState } from "react";
 import LoadingSkeleton from "../../components/ui/LoadingSkeleton";
-import { useToast } from "../../src/toast";
+import { toast } from "../../src/toast";
 import { useSmartAccountClient } from "../../src/hooks/useSmartAccountClient";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import Lottie from "lottie-react";
+import check from "../check.json";
 
 export default function Onboard() {
   const { register, connect, execute, address, loading } = useSmartAccountClient();
-  const [username, setUsername] = useState('');
   const [status, setStatus] = useState<string | null>(null);
-  const toast = useToast();
+  const {
+    register: formRegister,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<{ username: string }>({ defaultValues: { username: '' } });
+
+  const onSubmit = handleSubmit((data) => {
+    register(data.username);
+  });
 
   return (
     <div>
       {!address ? (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (!username.match(/^[a-zA-Z0-9_]{3,}$/)) {
-              toast('Invalid username');
-              return;
-            }
-            register(username);
-          }}
-        >
-          <input
-            aria-label="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+        <form onSubmit={onSubmit}>
+          <input aria-label="Username" {...formRegister('username', { pattern: /^[a-z0-9]{3,30}$/i })} />
+          {errors.username && <p className="text-red-500 text-sm">Invalid username</p>}
           <button type="submit" aria-label="Register">
             {loading ? <LoadingSkeleton /> : 'Register Passkey'}
           </button>
@@ -56,7 +54,7 @@ export default function Onboard() {
           {loading ? <LoadingSkeleton /> : 'Mint NFT'}
         </button>
       )}
-      {status === 'sent' && <p>✅ Minted!</p>}
+      {status === 'sent' && <Lottie animationData={check} className="h-12 w-12" />}
       {status === 'error' && <p>Error</p>}
     </div>
   );
