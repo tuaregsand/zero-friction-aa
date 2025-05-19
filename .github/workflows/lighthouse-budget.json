@@ -1,0 +1,30 @@
+{
+  "resourceSizes": [
+    {
+      "resourceType": "total",
+      "budget": 250
+    }
+  ],
+  "resourceCounts": [
+    {
+      "resourceType": "third-party",
+      "budget": 10
+    }
+  ],
+  "timings": [
+    {
+      "metric": "first-contentful-paint",
+      "budget": 2000
+    },
+    {
+      "metric": "interactive",
+      "budget": 4000
+    }
+  ],
+  "scores": [
+    {
+      "metric": "performance",
+      "budget": 0.9
+    }
+  ]
+} 

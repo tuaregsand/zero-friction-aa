@@ -56,6 +56,18 @@ Run Slither (if installed) with:
 pnpm slither
 ```
 
+Alternatively, use the provided Docker wrapper for a consistent Slither environment:
+
+```bash
+# 1. Build the Slither Docker image (only needed once or when Dockerfile.slither changes)
+docker build -t slither-analyzer -f Dockerfile.slither .
+
+# 2. Run Slither analysis using the Docker image
+docker run --rm -v $(pwd)/contracts:/app/contracts slither-analyzer
+```
+
+This will use the `scripts/run-slither.sh` script inside the container.
+
 ### Fuzz & Invariants
 
 Forge invariants live under `contracts/test/Invariant.t.sol`.
@@ -82,7 +94,7 @@ docker-compose up --build
 
 ## UX pattern
 
-The web app keeps interactions minimal. Registration occurs through a short form that validates a username before invoking Passkey APIs. Actions show inline skeletons while RPC calls run, and a toast in the top-right reports errors such as failed simulations. Upon success the UI confirms the NFT mint and clears the loader. This lightweight approach provides feedback without heavy dependencies and works with Wagmi’s basic hooks.
+The web app keeps interactions minimal. Registration occurs through a short form that validates a username before invoking Passkey APIs. Actions show inline skeletons while RPC calls run, and a toast in the top-right reports errors such as failed simulations. Upon success the UI confirms the NFT mint and clears the loader. This lightweight approach provides feedback without heavy dependencies and works with Wagmi's basic hooks.
 
 ## Architecture Deep-Dive
 

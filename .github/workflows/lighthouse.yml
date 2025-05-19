@@ -1,0 +1,33 @@
+name: Lighthouse CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+      - name: Build web app
+        run: pnpm --filter apps/web build
+      - name: Start web app
+        run: pnpm --filter apps/web start &
+      - name: Wait for web app
+        run: npx wait-on http://localhost:3000
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: 'http://localhost:3000/'
+          budgetPath: './.github/workflows/lighthouse-budget.json'
+          uploadArtifacts: true
+          configPath: './.github/workflows/lighthouserc.json'
+          temporaryPublicStorage: true 

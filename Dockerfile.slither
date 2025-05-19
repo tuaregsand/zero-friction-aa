@@ -1,0 +1,22 @@
+# Use an official Python runtime as a parent image
+FROM python:3.11-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Install Slither
+RUN pip install slither-analyzer
+
+# Create a working directory
+WORKDIR /app
+
+# Copy the contracts and the run script into the container
+COPY ./contracts ./contracts
+COPY ./scripts/run-slither.sh ./run-slither.sh
+
+# Make the script executable
+RUN chmod +x ./run-slither.sh
+
+# Run slither when the container launches
+CMD ["./run-slither.sh"] 
