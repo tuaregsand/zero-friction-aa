@@ -43,6 +43,10 @@ pnpm ci  # Runs: lint ⇒ typecheck ⇒ vitest (Bundler) ⇒ forge test (Contrac
 *   Foundry uses a **cached solc 0.8.24** and `FOUNDRY_OFFLINE=1` for reproducible builds (configured by `scripts/setup-dev.sh`).
 *   Vitest covers Bundler service logic including Paymaster API interactions. More tests are always welcome!
 
+## UX pattern
+
+The web app keeps interactions minimal. Registration occurs through a short form that validates a username before invoking Passkey APIs. Actions show inline skeletons while RPC calls run, and a toast in the top-right reports errors such as failed simulations. Upon success the UI confirms the NFT mint and clears the loader. This lightweight approach provides feedback without heavy dependencies and works with Wagmi’s basic hooks.
+
 ## Architecture Deep-Dive
 
 ### SmartAccount

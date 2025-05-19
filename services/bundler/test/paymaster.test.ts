@@ -18,6 +18,11 @@ afterAll(async () => {
 });
 
 describe('paymaster sponsor', () => {
+  it('health endpoint', async () => {
+    const res = await app.inject({ method: 'GET', url: '/healthz' });
+    expect(res.statusCode).toBe(200);
+    expect(JSON.parse(res.payload)).toEqual({ ok: true });
+  });
   it('returns signature for whitelisted dapp', async () => {
     const res = await app.inject({
       method: 'POST',
