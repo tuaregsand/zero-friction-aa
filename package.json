@@ -1,15 +1,16 @@
 {
   "name": "zero-friction-aa",
   "private": true,
+  "type": "module",
   "packageManager": "pnpm@10.11.0",
   "scripts": {
     "dev": "pnpm --filter services/bundler dev",
     "build": "pnpm --filter services/bundler build",
-    "test": "pnpm --filter web test && pnpm --filter bundler-service test && cd contracts && FOUNDRY_OFFLINE=true forge test",
+    "test": "pnpm --filter web test && pnpm --filter bundler-service test && cd contracts && forge test --use 0.8.24",
     "typecheck": "pnpm --filter web typecheck && pnpm --filter bundler-service typecheck",
     "lint": "eslint . --max-warnings=0",
     "ci": "make ci",
-    "hardhat": "cd contracts && FOUNDRY_OFFLINE=true forge test"
+    "hardhat": "cd contracts && forge test --use 0.8.24"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",

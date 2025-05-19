@@ -1,6 +1,8 @@
+# FIRST_EDIT: add Foundry bin to PATH for CI
+export PATH := $(HOME)/.foundry/bin:$(PATH)
 .PHONY: ci
 ci:
-<TAB>pnpm test
-<TAB>pnpm typecheck
-<TAB>pnpm lint
-<TAB>pnpm hardhat
+	pnpm test
+	pnpm typecheck
+	pnpm lint
+	pnpm hardhat

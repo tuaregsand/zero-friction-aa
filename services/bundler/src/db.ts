@@ -33,7 +33,11 @@ if (!process.env.SKIP_DB) {
   `);
 } else {
   db = {
-    select: () => Promise.resolve([]),
+    select: () => ({
+      from: () => ({
+        where: async () => [],
+      }),
+    }),
     insert: () => ({ values: () => ({ onConflictDoUpdate: async () => {} }) }),
   } as any;
 }

@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 process.env.SKIP_DB = '1';
+ process.env.PAYMASTER_KEY = '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';   /** dummy keys */
+process.env.BUNDLER_KEY = '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';  /** dummy keys */
 let createServer: any;
 
 let app: Awaited<ReturnType<typeof createServer>>;
@@ -16,7 +18,7 @@ afterAll(async () => {
 });
 
 describe('paymaster sponsor', () => {
-  it.skip('returns signature for whitelisted dapp', async () => {
+  it('returns signature for whitelisted dapp', async () => {
     const res = await app.inject({
       method: 'POST',
       url: '/sponsor',
@@ -26,7 +28,7 @@ describe('paymaster sponsor', () => {
     expect(JSON.parse(res.payload).paymasterAndData).toBeDefined();
   });
 
-  it.skip('rejects non-whitelisted dapp', async () => {
+  it('rejects non-whitelisted dapp', async () => {
     const res = await app.inject({
       method: 'POST',
       url: '/sponsor',
@@ -35,7 +37,7 @@ describe('paymaster sponsor', () => {
     expect(res.statusCode).toBe(403);
   });
 
-  it.skip('rejects when budget exceeded', async () => {
+  it('rejects when budget exceeded', async () => {
     const res1 = await app.inject({
       method: 'POST',
       url: '/sponsor',

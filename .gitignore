@@ -2,3 +2,25 @@ node_modules/
 contracts/cache/
 contracts/out/
 pnpm-lock.yaml
+/apps/web/.next
+.env.local
+
+# macOS
+.DS_Store
+
+# Environment variables
+.env
+.env.*.local
+
+# Log files
+*.log
+logs/
+
+# Coverage directory and reports
+coverage/
+*.lcov
+
+# Build artifacts
+dist/
+build/
+services/bundler/dist/
