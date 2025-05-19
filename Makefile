@@ -1,6 +1,6 @@
 .PHONY: ci
 ci:
-	pnpm test
-	pnpm typecheck
-	pnpm lint
-       pnpm hardhat
+<TAB>pnpm test
+<TAB>pnpm typecheck
+<TAB>pnpm lint
+<TAB>pnpm hardhat
