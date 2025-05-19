@@ -1,6 +1,7 @@
 # Zero-Friction AA Kit
 
 [![CI](https://github.com/tuaregsand/zero-friction-aa/actions/workflows/ci.yml/badge.svg)](https://github.com/tuaregsand/zero-friction-aa/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/coverage-generated-blue)](https://github.com/tuaregsand/zero-friction-aa/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Node.js Version](https://img.shields.io/badge/Node.js-20%2B-blue)
 ![Fastify Version](https://img.shields.io/badge/Fastify-v5-green)
@@ -39,6 +40,35 @@ pnpm dev               # Spawns Bundler (http://localhost:3001) & Next.js app (h
 # Ensure you've run ./scripts/setup-dev.sh and pnpm install first.
 pnpm ci  # Runs: lint ⇒ typecheck ⇒ vitest (Bundler) ⇒ forge test (Contracts)
 ```
+
+### Static Analysis
+
+Run Slither (if installed) with:
+
+```bash
+pnpm slither
+```
+
+### Fuzz & Invariants
+
+Forge invariants live under `contracts/test/Invariant.t.sol`.
+Run them via:
+
+```bash
+pnpm fuzz
+```
+
+An Echidna config is provided in `contracts/echidna.yaml` for
+additional property testing.
+
+### Docker Compose
+
+Launch Anvil, the Bundler and Next.js web app together:
+
+```bash
+docker-compose up --build
+```
+
 
 *   Foundry uses a **cached solc 0.8.24** and `FOUNDRY_OFFLINE=1` for reproducible builds (configured by `scripts/setup-dev.sh`).
 *   Vitest covers Bundler service logic including Paymaster API interactions. More tests are always welcome!

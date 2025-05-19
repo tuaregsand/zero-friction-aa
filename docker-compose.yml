@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  anvil:
+    image: ghcr.io/foundry-rs/foundry:latest
+    command: anvil --host 0.0.0.0 --port 8545 --offline
+    ports:
+      - "8545:8545"
+  bundler:
+    build: ./services/bundler
+    ports:
+      - "3001:3001"
+    depends_on:
+      - anvil
+  web:
+    build: ./apps/web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - bundler

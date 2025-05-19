@@ -1,0 +1,3 @@
+testMode: assertion
+filter: Invariant
+contractAddr: Invariant
