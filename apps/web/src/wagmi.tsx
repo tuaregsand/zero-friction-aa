@@ -1,3 +1,5 @@
+"use client";
+
 import { createConfig, http, WagmiProvider } from 'wagmi';
 import { base } from 'wagmi/chains';
 import { ReactNode } from 'react';

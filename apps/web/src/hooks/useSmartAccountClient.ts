@@ -13,7 +13,7 @@ export function useSmartAccountClient() {
     setLoading(true);
     try {
       await startRegistration({
-        publicKey: {
+        optionsJSON: {
           challenge: '0',
           rp: { name: 'zfa' },
           user: { id: new Uint8Array([0]), name: username, displayName: username },
@@ -27,7 +27,12 @@ export function useSmartAccountClient() {
   const connect = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await startAuthentication({ publicKey: { challenge: '0', allowCredentials: [] } });
+      const res = await startAuthentication({
+        optionsJSON: {
+          challenge: '0',
+          allowCredentials: [],
+        },
+      });
       setAddress((`0x${res.id}` as `0x${string}`));
     } finally {
       setLoading(false);

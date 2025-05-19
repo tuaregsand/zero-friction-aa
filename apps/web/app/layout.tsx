@@ -1,8 +1,7 @@
 // @ts-nocheck
 import React from 'react';
 import './globals.css';
-import { ToastProvider } from '../src/toast';
-import { Wagmi } from '../src/wagmi';
+import Providers from './Providers';
 
 export const metadata = {
   title: 'Zero-Friction AA',
@@ -19,9 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="description" content={metadata.description} />
       </head>
       <body>
-        <Wagmi>
-          <ToastProvider>{children}</ToastProvider>
-        </Wagmi>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
