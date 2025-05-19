@@ -19,6 +19,7 @@
     "@fastify/cors": "^11.0.1",
     "@simplewebauthn/browser": "^13.1.0",
     "@tanstack/react-query": "^5.76.1",
+    "fastify-compress": "^4.1.0",
     "fastify-metrics": "^12.1.0",
     "lottie-react": "^2.4.1",
     "next": "^15.3.2",
