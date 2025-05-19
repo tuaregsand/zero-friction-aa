@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  anvil:
+    image: ghcr.io/foundry-rs/foundry:latest
+    command: anvil --host 0.0.0.0 --port 8545 --offline
+    ports:
+      - "8545:8545"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8545"]
+      interval: 10s
+      retries: 3
+  bundler:
+    image: ghcr.io/tuaregsand/zfa-bundler:latest
+    environment:
+      PORT: 3000
+      ENTRYPOINT: ${ENTRYPOINT}
+      RPC_URL: ${RPC_URL:-http://anvil:8545}
+      DAILY_BUDGET_WEI: ${DAILY_BUDGET_WEI:-1000000000000000000}
+      PAYMASTER_KEY: ${PAYMASTER_KEY}
+      BUNDLER_KEY: ${BUNDLER_KEY}
+    ports:
+      - "3000:3000"
+    depends_on:
+      anvil:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthz"]
+      interval: 10s
+      retries: 3
+  web:
+    image: ghcr.io/tuaregsand/zfa-web:latest
+    environment:
+      PORT: 4000
+      NEXT_PUBLIC_BUNDLER_URL: http://localhost:3000
+    ports:
+      - "4000:4000"
+    depends_on:
+      bundler:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000"]
+      interval: 10s
+      retries: 3

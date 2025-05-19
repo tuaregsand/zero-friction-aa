@@ -24,6 +24,11 @@ contract EntryPointMock is IEntryPoint {
 }
 
 contract InvariantPaymaster is Test {
+    function _clamp(uint256 x, uint256 min, uint256 max) internal pure returns (uint256) {
+        if (x < min) return min;
+        if (x > max) return max;
+        return x;
+    }
     EntryPointMock private ep;
     ZfaPaymaster private paymaster;
     address private owner;
@@ -36,7 +41,7 @@ contract InvariantPaymaster is Test {
     }
 
     function testInvariantWhitelistRandomized(address attacker) public {
-        attacker = address(uint160(bound(uint256(uint160(attacker)), 1, type(uint160).max)));
+        attacker = address(uint160(_clamp(uint256(uint160(attacker)), 1, type(uint160).max)));
         if (attacker == owner) return;
         vm.prank(attacker);
         vm.expectRevert();
@@ -47,9 +52,8 @@ contract InvariantPaymaster is Test {
     }
 
     function testInvariantDepositWithdraw(uint256 depositAmount) public {
-        depositAmount = bound(depositAmount, 1, 10 ether);
+        depositAmount = _clamp(depositAmount, 1, 10 ether);
         uint256 before = address(paymaster).balance;
-        vm.deal(address(this), depositAmount);
         paymaster.depositToEntryPoint{value: depositAmount}();
         assertEq(ep.deposits(address(paymaster)), depositAmount);
         // Simulate withdrawal

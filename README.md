@@ -20,9 +20,19 @@ Zero-Friction AA Kit delivers an ERC-4337 Smart Account, a whitelist Paymaster, 
 ## 🚀 Quick start
 
 ```bash
-docker compose up -d
+docker compose -f docker-compose.prod.yml up -d
 open http://localhost:4000/onboard
 ```
+
+| Variable | Description |
+| --- | --- |
+| `ENTRYPOINT` | Address of EntryPoint contract |
+| `RPC_URL` | JSON-RPC endpoint used by Bundler |
+| `DAILY_BUDGET_WEI` | Max gas sponsorship per user/day |
+| `PAYMASTER_KEY` | Private key for the paymaster signer |
+| `BUNDLER_KEY` | Private key to submit ops |
+
+Images are published at `ghcr.io/tuaregsand/zfa-bundler` and `ghcr.io/tuaregsand/zfa-web`.
 
 ## Installation & Dev Loop
 

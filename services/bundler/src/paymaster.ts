@@ -11,6 +11,10 @@ const DAILY_BUDGET = BigInt(process.env.DAILY_BUDGET_WEI ?? '0');
 const RPC_URL = process.env.RPC_URL ?? 'http://localhost:8545';
 const PAYMASTER_KEY = process.env.PAYMASTER_KEY ?? '0x00';
 
+const RATE_LIMIT = Number(process.env.RATE_LIMIT_PER_MIN ?? '30');
+type Bucket = { tokens: number; last: number };
+const buckets: Record<string, Bucket> = {};
+
 const account = privateKeyToAccount(PAYMASTER_KEY as `0x${string}`);
 const client = createWalletClient({ transport: http(RPC_URL), account });
 
@@ -19,7 +23,21 @@ const inMemoryWhitelist = new Set<string>(['0xDapp']);
 const inMemorySpendRecord: Record<string, bigint> = {};
 
 export const paymasterPlugin = fp(async function (app: FastifyInstance, _opts: FastifyPluginOptions) {
+  function allow(key: string): boolean {
+    const now = Date.now();
+    const b = buckets[key] ?? { tokens: 0, last: now };
+    const leak = ((now - b.last) / 60000) * RATE_LIMIT;
+    b.tokens = Math.max(0, b.tokens - leak);
+    b.last = now;
+    if (b.tokens >= RATE_LIMIT) return false;
+    b.tokens += 1;
+    buckets[key] = b;
+    return true;
+  }
   app.post('/sponsor', async (req, reply) => {
+    if (!allow(req.ip)) {
+      return reply.status(429).send({ error: 'rate limit' });
+    }
     const { user, dapp, amountWei } = req.body as { user: string; dapp: string; amountWei: string };
     const today = new Date().toISOString().slice(0, 10);
     const amount = BigInt(amountWei);
