@@ -2,7 +2,9 @@
 export PATH := $(HOME)/.foundry/bin:$(PATH)
 .PHONY: ci
 ci:
-	pnpm test
-	pnpm typecheck
 	pnpm lint
-	pnpm hardhat
+	pnpm typecheck
+	pnpm test
+	pnpm fuzz
+	pnpm slither
+
