@@ -22,6 +22,7 @@ Zero-Friction AA Kit delivers an ERC-4337 Smart Account, a whitelist Paymaster, 
 ```bash
 docker compose up -d
 open http://localhost:4000/onboard
+pnpm e2e  # runs headless browser test
 ```
 
 ## Installation & Dev Loop

@@ -7,3 +7,9 @@ This project implements ERC-4337 account abstraction. Specific risks include:
 - **Validation gas** – high validation costs can drain user funds. Our bundler simulates operations first and the Paymaster caps refunded gas via `maxRefundWei`.
 
 Always review contracts before deployment and run static analysis tools.
+
+## Responsible disclosure
+Please report vulnerabilities via email to security@example.com. Qualifying reports may receive rewards:
+- Critical: up to $2,000
+- High: up to $1,000
+- Medium: up to $500

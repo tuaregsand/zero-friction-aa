@@ -11,6 +11,7 @@
     "lint": "eslint . --max-warnings=0",
     "fuzz": "cd contracts && forge test --match-contract Invariant",
     "slither": "./scripts/run-slither.sh",
+    "e2e": "cd e2e && pnpm test",
     "ci": "make ci",
     "hardhat": "cd contracts && forge test"
   },

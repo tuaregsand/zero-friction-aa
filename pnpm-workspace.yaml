@@ -2,3 +2,4 @@ packages:
   - "services/*"
   - "contracts"
   - "apps/*"
+  - "e2e"
