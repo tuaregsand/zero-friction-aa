@@ -36,7 +36,7 @@ contract InvariantPaymaster is Test {
     }
 
     function testInvariantWhitelistRandomized(address attacker) public {
-        attacker = address(uint160(bound(uint256(uint160(attacker)), 1, type(uint160).max)));
+        attacker = address(uint160(uint256(uint160(attacker)) % type(uint160).max + 1));
         if (attacker == owner) return;
         vm.prank(attacker);
         vm.expectRevert();
@@ -47,9 +47,8 @@ contract InvariantPaymaster is Test {
     }
 
     function testInvariantDepositWithdraw(uint256 depositAmount) public {
-        depositAmount = bound(depositAmount, 1, 10 ether);
+        depositAmount = depositAmount % (10 ether) + 1;
         uint256 before = address(paymaster).balance;
-        vm.deal(address(this), depositAmount);
         paymaster.depositToEntryPoint{value: depositAmount}();
         assertEq(ep.deposits(address(paymaster)), depositAmount);
         // Simulate withdrawal

@@ -1,6 +1,7 @@
 // @ts-nocheck
 "use client";
 import LoadingSkeleton from "../../components/ui/LoadingSkeleton";
+import LedgerButton from "../../components/ui/LedgerButton";
 import { toast } from "../../src/toast";
 import { useSmartAccountClient } from "../../src/hooks/useSmartAccountClient";
 import { useForm } from "react-hook-form";
@@ -33,6 +34,7 @@ export default function Onboard() {
           <button type="button" aria-label="Connect" onClick={() => connect()}>
             Connect
           </button>
+          <LedgerButton onConnect={() => connect()} />
         </form>
       ) : (
         <button

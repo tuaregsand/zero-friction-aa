@@ -10,6 +10,7 @@ export async function createServer() {
     reply.header('access-control-allow-origin', '*');
     reply.header('access-control-allow-headers', '*');
     reply.header('access-control-allow-methods', '*');
+    reply.header('content-encoding', 'gzip');
   });
 
   await app.register(paymasterPlugin);

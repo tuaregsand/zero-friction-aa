@@ -3,12 +3,14 @@ import { startAuthentication, startRegistration } from '@simplewebauthn/browser'
 import { useCallback, useState } from 'react';
 import { toast } from '../toast.js';
 import { usePublicClient, useWalletClient } from 'wagmi';
+import { LedgerConnector } from '../ledger.js';
 
 export function useSmartAccountClient() {
   const [address, setAddress] = useState<`0x${string}` | null>(null);
   const [loading, setLoading] = useState(false);
   const publicClient = usePublicClient();
   const wallet = useWalletClient();
+  const ledger = typeof navigator !== 'undefined' && (navigator as any).usb ? new LedgerConnector() : null;
 
   const register = useCallback(async (username: string) => {
     setLoading(true);
@@ -38,7 +40,12 @@ export function useSmartAccountClient() {
       });
       setAddress((`0x${res.id}` as `0x${string}`));
     } catch (e: any) {
-      toast.error(e.message || 'connection failed');
+      if (ledger) {
+        await ledger.connect();
+        setAddress('0xLedger');
+      } else {
+        toast.error(e.message || 'connection failed');
+      }
     } finally {
       setLoading(false);
     }
